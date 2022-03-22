@@ -1,5 +1,7 @@
 # カートリッジヘッダ
 
+<img src="../images/img_03.png" alt="cart" title="https://www.pokemon.co.jp/ex/VCAMAP/dlcard/ より引用" width="240px" ></img>
+
 ## 0100-0103 - エントリーポイント
 
 任天堂ロゴが表示された後、内蔵のブート手順ではこのアドレス（`$0100`）にジャンプし、カートリッジ内の実際のメインプログラムにジャンプするはずです。
@@ -136,16 +138,16 @@ Code | Type
  $03 | MBC1+RAM+BATTERY
  $05 | MBC2
  $06 | MBC2+BATTERY
- $08 | ROM+RAM [^rom_ram]
- $09 | ROM+RAM+BATTERY [^rom_ram]
+ $08 | ROM+RAM <sup>[1](#rom_ram)</sup>
+ $09 | ROM+RAM+BATTERY <sup>[1](#rom_ram)</sup>
  $0B | MMM01
  $0C | MMM01+RAM
  $0D | MMM01+RAM+BATTERY
  $0F | MBC3+TIMER+BATTERY
- $10 | MBC3+TIMER+RAM+BATTERY [^mbc30]
+ $10 | MBC3+TIMER+RAM+BATTERY <sup>[2](#mbc30)</sup>
  $11 | MBC3
- $12 | MBC3+RAM [^mbc30]
- $13 | MBC3+RAM+BATTERY [^mbc30]
+ $12 | MBC3+RAM <sup>[2](#mbc30)</sup>
+ $13 | MBC3+RAM+BATTERY <sup>[2](#mbc30)</sup>
  $19 | MBC5
  $1A | MBC5+RAM
  $1B | MBC5+RAM+BATTERY
@@ -159,11 +161,9 @@ Code | Type
  $FE | HuC3
  $FF | HuC1+RAM+BATTERY
 
-[^rom_ram]:
-このオプションを使用しているライセンスカートリッジはありません。正確な動作は不明です。
+<sup id="rom_ram">1: このオプションを使用しているライセンスカートリッジはありません。正確な動作は不明です。</sup>
 
-[^mbc30]:
-RAMサイズが64KByteのMBC3とは、ポケモンクリスタルの日本ROMでのみ使用されたMBC30のことです。
+<sup id="mbc30">2: RAMサイズが64KByteのMBC3とは、ポケモンクリスタルの日本ROMでのみ使用されたMBC30のことです。</sup>
 
 ## 0148 - ROMサイズ
 
@@ -171,21 +171,20 @@ RAMサイズが64KByteのMBC3とは、ポケモンクリスタルの日本ROMで
 
 Code | Size      | Amount of banks
 -----|-----------|-----------------
- $00 |  32 KByte | 2 (No ROM banking)
- $01 |  64 KByte | 4
- $02 | 128 KByte | 8
- $03 | 256 KByte | 16
- $04 | 512 KByte | 32
- $05 |   1 MByte | 64
- $06 |   2 MByte | 128
- $07 |   4 MByte | 256
- $08 |   8 MByte | 512
- $52 | 1.1 MByte | 72 [^weird_rom_sizes]
- $53 | 1.2 MByte | 80 [^weird_rom_sizes]
- $54 | 1.5 MByte | 96 [^weird_rom_sizes]
+ $00 |  32 KB | 2 (ROMバンク無し)
+ $01 |  64 KB | 4
+ $02 | 128 KB | 8
+ $03 | 256 KB | 16
+ $04 | 512 KB | 32
+ $05 |   1 MB | 64
+ $06 |   2 MB | 128
+ $07 |   4 MB | 256
+ $08 |   8 MB | 512
+ $52 | 1.1 MB | 72 <sup>[3](#weird_rom_sizes)</sup>
+ $53 | 1.2 MB | 80 <sup>[3](#weird_rom_sizes)</sup>
+ $54 | 1.5 MB | 96 <sup>[3](#weird_rom_sizes)</sup>
 
-[^weird_rom_sizes]:
-非公式のドキュメントにのみ記載されています。これらのサイズを使用したカートリッジやROMファイルは知られていません。他のROMサイズはすべて2の累乗なので、これらの値は正確ではないと思われます。これらの値の出典は不明です。
+<sup id="weird_rom_sizes">3: 非公式のドキュメントにのみ記載されています。これらのサイズを使用したカートリッジやROMファイルは知られていません。他のROMサイズはすべて2の累乗なので、これらの値は正確ではないと思われます。これらの値の出典は不明です。</sup>
 
 ## 0149 - RAMサイズ
 
@@ -193,21 +192,19 @@ Code | Size      | Amount of banks
 
 Code | Size   | Comment
 -----|--------|---------
- $00 | 0      | No RAM [^mbc2]
- $01 | -      | Unused [^2kib_sram]
+ $00 | 0      | No RAM <sup>[4](#mbc2)</sup>
+ $01 | -      | Unused <sup>[5](#2kib_sram)</sup>
  $02 | 8 KB   | 1 bank
  $03 | 32 KB  | 4 banks of 8 KB each
  $04 | 128 KB | 16 banks of 8 KB each
  $05 | 64 KB  | 8 banks of 8 KB each
 
-[^mbc2]:
-MBC2チップを使用する場合、MBC2には 512×4 bit のRAMが内蔵されていますが、RAM Sizeとして$00を指定する必要があります。
-
-[^2kib_sram]:
-様々な非公式ドキュメントには2KBと記載されています。しかし、2KBのRAMチップがカートリッジに使われたことはありません。これらの値の出典は不明です。
-
-Various "PD" ROMs ("Public Domain" homebrew ROMs generally tagged "(PD)" in the filename) are known to use the $01 RAM Size tag, but this is believed
+ Various "PD" ROMs ("Public Domain" homebrew ROMs generally tagged "(PD)" in the filename) are known to use the $01 RAM Size tag, but this is believed
 to have been a mistake with early homebrew tools and the PD ROMs often don't use cartridge RAM at all.
+
+<sup id="mbc2">4: MBC2チップを使用する場合、MBC2には 512×4 bit のRAMが内蔵されていますが、RAM Sizeとして$00を指定する必要があります。</sup>
+
+<sup id="2kib_sram">5: 様々な非公式ドキュメントには2KBと記載されています。しかし、2KBのRAMチップがカートリッジに使われたことはありません。これらの値の出典は不明です。</sup>
 
 ## 014A - 販売先コード
 
