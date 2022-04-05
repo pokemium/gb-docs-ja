@@ -7,14 +7,14 @@
 このレジスタのbit5,4に書き込むことで、アクションボタンか方向ボタンかを選択し、bit0-3を読み出します。
 
 ```
-Bit 7 - 不使用
-Bit 6 - 不使用
-Bit 5 - P15 Select Action buttons    (0=Select)
-Bit 4 - P14 Select Direction buttons (0=Select)
-Bit 3 - P13 Input: Down  or Start    (0=Pressed) (読み取り専用)
-Bit 2 - P12 Input: Up    or Select   (0=Pressed) (読み取り専用)
-Bit 1 - P11 Input: Left  or B        (0=Pressed) (読み取り専用)
-Bit 0 - P10 Input: Right or A        (0=Pressed) (読み取り専用)
+Bit 7: 不使用
+Bit 6: 不使用
+Bit 5: P15 Select Action buttons    (0=Select)
+Bit 4: P14 Select Direction buttons (0=Select)
+Bit 3: P13 Input: Down  or Start    (0=Pressed) (読み取り専用)
+Bit 2: P12 Input: Up    or Select   (0=Pressed) (読み取り専用)
+Bit 1: P11 Input: Left  or B        (0=Pressed) (読み取り専用)
+Bit 0: P10 Input: Right or A        (0=Pressed) (読み取り専用)
 ```
 
 **注意**

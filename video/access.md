@@ -6,11 +6,7 @@ PPUが画面を描画しているときは、ビデオメモリ（VRAM）とス�
 
 また、VRAMやOAMから読み出そうとすると、未定義データ（通常は`$FF`）が返されます。
 
-このため、プログラムは実際に読み書きする前に、VRAM/OAMにアクセスできるかどうかを確認する必要があります。
-
-これは通常、STATレジスタ（FF41）からモードビット(bit0-1)を読み出すことで行います。
-
-これを行う場合（以下の例で説明します）、待機ループと次のメモリアクセスの間に割り込みが発生しないように注意する必要があります。
+このため、プログラムは実際に読み書きする前に、VRAM/OAMにアクセスできるかどうかを確認する必要があります。これは通常、STATレジスタ（FF41）からモードビット(bit0-1)を読み出すことで行います。これを行う場合（以下の例で説明します）、待機ループと次のメモリアクセスの間に割り込みが発生しないように注意する必要があります。
 
 ## VRAMへのアクセス
 
@@ -35,20 +31,26 @@ VRAMへのアクセスを待つ典型的なサンプルコードは以下の通�
 
 ただし、STAT割り込みなど、割り込みから復帰するまでにモード3に戻ってしまう可能性のある割り込みには注意が必要です。
 
-また、CGBモードでVRAMにデータを書き込むには、HDMA（FF51-FF55）を使用する方法があります。
+また、CGBモードでVRAMにデータを書き込むには、HDMA（`FF51..FF55`）を使用する方法があります。
 
-If you do not require any STAT interrupts, another way to synchronize to the start of Mode 0 is to disable all the individual STAT interrupts except Mode 0 (STAT bit 3), enable STAT interrupts (IE bit 1), disable IME (by executing `di`), and use the `halt` instruction. This allows use of the entire Mode 0 on one line and Mode 2 on the following line, which sum to 165 to 288 dots. For comparison, at single speed (4 dots per machine cycle), a copy from stack that takes 9 cycles per 2 bytes can push 8 bytes (half a tile) in 144 dots, which fits within the worst case timing for mode 0+2.
+STAT割り込みが不要な場合は、
+
+- モード0以外の個々のSTAT割り込みを無効（STAT.3）
+- STAT割り込みを有効（IE.1）
+- DI命令でIMEを無効
+
+にしてHALT命令を使用することで、モード0の開始まで待つこともできます。This allows use of the entire Mode 0 on one line and Mode 2 on the following line, which sum to 165 to 288 dots. For comparison, at single speed (4 dots per machine cycle), a copy from stack that takes 9 cycles per 2 bytes can push 8 bytes (half a tile) in 144 dots, which fits within the worst case timing for mode 0+2.
 
 ## OAMへのアクセス
 
-OAM(`0xfe00..fe9f`)にアクセス可能なのは、モード0~1のときです。
+OAM(`0xFE00..FE9F`)にアクセス可能なのは、モード0~1のときです。
 
 ```
 モード0: HBlank
 モード1: VBlank
 ```
 
-これらのモードの間、OAMは直接またはDMA転送(0xff46)によってアクセスすることができます。
+これらのモードの間、OAMは直接またはDMA転送(`0xFF46`)によってアクセスすることができます。
 
 これらのモード以外では、DMAがPPUより優先してOAMにアクセスするため、PPUはその間にOAMから`0xFF`を読み出します。
 
