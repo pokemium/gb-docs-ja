@@ -30,7 +30,7 @@ CGBでは、ビットマップの前半部分（18バイト）のみを検証し
 
 任天堂はCGBを開発する際に、この領域の長さを15文字にしましたが、その数ヶ月後には11文字にするという素晴らしいアイデアを出しました。
 
-新しいゲームでは後ろの4バイト部分(`013f-0143`)は以下のように使われています。
+新しいゲームでは後ろの4バイト部分(`0x013f..0143`)は以下のように使われています。
 
 ## 013F-0142 - 製造元コード
 
@@ -192,12 +192,12 @@ Code | Size      | Amount of banks
 
 Code | Size   | Comment
 -----|--------|---------
- $00 | 0      | No RAM <sup>[4](#mbc2)</sup>
- $01 | -      | Unused <sup>[5](#2kib_sram)</sup>
- $02 | 8 KB   | 1 bank
- $03 | 32 KB  | 4 banks of 8 KB each
- $04 | 128 KB | 16 banks of 8 KB each
- $05 | 64 KB  | 8 banks of 8 KB each
+ $00 | 0      | RAM無し <sup>[4](#mbc2)</sup>
+ $01 | -      | 不使用 <sup>[5](#2kib_sram)</sup>
+ $02 | 8 KB   | 1バンク
+ $03 | 32 KB  | 4バンク
+ $04 | 128 KB | 16バンク
+ $05 | 64 KB  | 8バンク
 
  Various "PD" ROMs ("Public Domain" homebrew ROMs generally tagged "(PD)" in the filename) are known to use the $01 RAM Size tag, but this is believed
 to have been a mistake with early homebrew tools and the PD ROMs often don't use cartridge RAM at all.
@@ -215,7 +215,7 @@ to have been a mistake with early homebrew tools and the PD ROMs often don't use
 
 ## 014B - ライセンスコード(旧)
 
-ゲーム開発元/販売元コードを`$00-FF`の範囲で指定します。`$33`を指定すると、新しいほうのライセンスコード（ヘッダの`$0144-0145`）が使用されます。(SGB機能は$33以外の値では無効になります)
+ゲーム開発元/販売元コードを`$00-FF`の範囲で指定します。`$33`を指定すると、新しいほうのライセンスコード（ヘッダの`$0144..0145`）が使用されます。(SGB機能は$33以外の値では無効になります)
 
 ライセンスコードの一覧は[こちら](https://raw.githubusercontent.com/gb-archive/salvage/master/txt-files/gbrom.txt)をみてください。
 
@@ -225,7 +225,7 @@ to have been a mistake with early homebrew tools and the PD ROMs often don't use
 
 ## 014D - ヘッダチェックサム
 
-カートリッジのヘッダバイト($0134-014C)の8bitチェックサムが含まれています。
+カートリッジのヘッダバイト(`$0134..014C`)の8bitチェックサムが含まれています。
 
 ブートROMは`x`を次のように計算します。
 
