@@ -76,6 +76,7 @@ GameBoy, GameBoyColorについて、技術的な詳細を日本語でまとめ�
   - [MBC3](./cartridge/mbc/mbc3.md)
   - [MBC5](./cartridge/mbc/mbc5.md)
   - [MBC6](./cartridge/mbc/mbc6.md)
+  - [HuC1](./cartridge/mbc/huc1.md)
 
 ### ツール
 
